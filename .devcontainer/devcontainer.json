@@ -1,0 +1,43 @@
+{
+  "name": "Event Management System",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/dotnet:2": {
+      "version": "8.0"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    },
+    "ghcr.io/devcontainers/features/azure-cli:1": {}
+  },
+  "postCreateCommand": "npm install -g azure-functions-core-tools@4 --unsafe-perm true && cd frontend/events-app && npm install && cd ../../backend/EventsApi && dotnet restore",
+  "forwardPorts": [5173, 7071],
+  "portsAttributes": {
+    "5173": {
+      "label": "Frontend",
+      "protocol": "https"
+    },
+    "7071": {
+      "label": "Backend API", 
+      "protocol": "https"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-typescript-next",
+        "ms-dotnettools.csharp",
+        "ms-azuretools.vscode-azurefunctions",
+        "Vue.volar",
+        "esbenp.prettier-vscode",
+        "ms-vscode.vscode-eslint"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+  "remoteEnv": {
+    "VITE_API_BASE_URL": "https://${CODESPACE_NAME}-7071.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/api"
+  }
+}
